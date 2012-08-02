@@ -30,6 +30,8 @@ class copyWiki extends StudipPlugin implements SystemPlugin
     }
 
     public function show_action() {
+        PageLayout::addStylesheet($this->getPluginURL() .'/assets/wikicopy.css');
+        PageLayout::addScript($this->getPluginURL() . '/assets/wikiCopy.js');
         $template = $this->getTemplate("copy.php");
         $this->vlid = $_REQUEST["cid"];
         $template->set_attribute('infos', $this->getWikiInfos());
@@ -66,17 +68,18 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $aenderung->execute(array($GLOBALS['user']->id));
 
         $vls =  $aenderung->fetchAll();
-        print_r($vls);
        foreach($vls as $v) {
-            $semester = $db->prepare("SELECT s.name, s.vorles_beginn as beginn, s.vorles_ende as ende  FROM `semester_data` as s
-                                      WHERE beginn <= ? AND ende >= ?");
-            $semester->execute(array($v["start_time"],$v["start_time"]));
+           if($this->vlid != $v["id"]) {
+                $semester = $db->prepare("SELECT s.name, s.vorles_beginn as beginn, s.vorles_ende as ende  FROM `semester_data` as s
+                                          WHERE beginn <= ? AND ende >= ?");
+                $semester->execute(array($v["start_time"],$v["start_time"]));
 
-            $sem =  $semester->fetchAll();
-            $sem = $sem[0];
+                $sem =  $semester->fetchAll();
+                $sem = $sem[0];
 
-            $v["sem_name"] = $sem["name"];
-           $vlliste[] = $v;
+                $v["sem_name"] = $sem["name"];
+               $vlliste[] = $v;
+           }
        }
 
         return $vlliste;

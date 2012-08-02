@@ -4,14 +4,18 @@
         <div>Anzahl der Wiki Seiten: <?= $infos["seiten"] ?></div>
         <div>Letzte Änderung: <?= date("d.m.Y - G:i:s" ,$infos["aenderung"]) ?> </div>
     </p>
-        <form action="copy">
+
             <div><p>Liste der Vorlesungen</p></div>
             <div style="width: 100%; float: left;"><div style="width: 5%; float: left;">Auswahl</div><div style="width: 10%; float: left;">Semester</div><div style="width: 40%; float: left;">Vorlesungsname</div></div>
             <? foreach($vls as $v) : ?>
-                <div style="width: 100%; float: left;"><div style="width: 5%; float: left;">--</div><div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div><div style="width: 40%; float: left;"><?= $v["name"] ?></div></div>
+                <div style="width: 100%; float: left;"><div style="width: 5%; float: left;"><input type="checkbox" name="vorlesung" value="<?= $v["id"] ?>" ></div><div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div><div style="width: 40%; float: left;"><?= $v["name"] ?></div></div>
             <? endforeach ?>
             <p>
                 Wiki dieser Vorlesung (Vorlesungsname) in die obenausgewählten Vorlesungen kopieren
-                <button>Kopieren</button>
+                <button id="buttonCopyWiki">Kopieren</button>
             </p>
-        </form>
+            <div id="copystatus" style="display: hiden;">
+                Status des Kopier Vorgangs:
+                <div id="progressbar"></div>
+
+            </div>
