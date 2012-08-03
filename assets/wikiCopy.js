@@ -11,16 +11,19 @@ function copyWiki(vls, anzahl)
     var nextstep = steps;
     $.each(vls, function(index, value) {
         alert(index+ "=>" + value);
-        $.getJSON('/plugins_packages/neo/neocopywiki/ajax.php', {
-            from: $.getURLParam("cid"),
+        $.getJSON('/plugins_packages/neo/copyWiki/ajax.php', {
+            from: $("#cid").val(),
             to: value
         }, function(data){
+            if(data["status"] == "ok") {
+                $( "#progressbar" ).progressbar({
+                    value: nextstep
+                });
+                nextstep = nextstep + steps;
+            }
         });
 
-        $( "#progressbar" ).progressbar({
-            value: nextstep
-        });
-        nextstep = nextstep + steps;
+
     });
 }
 

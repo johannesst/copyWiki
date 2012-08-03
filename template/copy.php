@@ -14,8 +14,10 @@
                 Wiki dieser Vorlesung (Vorlesungsname) in die obenausgewählten Vorlesungen kopieren
                 <button id="buttonCopyWiki">Kopieren</button>
             </p>
-            <div id="copystatus" style="display: hiden;">
+            <div id="copystatus" style="display: none;">
                 Status des Kopier Vorgangs:
                 <div id="progressbar"></div>
 
             </div>
+
+            <input id="cid" style="display: ;" value="<?= $cid ?>">

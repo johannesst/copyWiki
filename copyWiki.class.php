@@ -36,6 +36,7 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $this->vlid = $_REQUEST["cid"];
         $template->set_attribute('infos', $this->getWikiInfos());
         $template->set_attribute('vls', $this->getUserVl());
+        $template->set_attribute('cid', $this->vlid);
         echo $template->render();
     }
 
