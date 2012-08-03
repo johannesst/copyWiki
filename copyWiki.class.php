@@ -17,7 +17,6 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         if(isset($_REQUEST["cid"])) $this->vlid = $_REQUEST["cid"];
         if(isset($this->vlid)) {
             $userid = $GLOBALS['user']->id;
-            echo $userid;
             $userrechte =   $perm->studip_perms;
             $this->userright = $userrechte[$this->vlid][$userid];
             if($this->userright == "dozent") {
@@ -37,6 +36,7 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $template->set_attribute('infos', $this->getWikiInfos());
         $template->set_attribute('vls', $this->getUserVl());
         $template->set_attribute('cid', $this->vlid);
+        $template->set_attribute('vorlesungsname', $this->getVlName());
         echo $template->render();
     }
 
@@ -87,6 +87,17 @@ class copyWiki extends StudipPlugin implements SystemPlugin
 
     }
 
+    private function getVlName() {
+        $db = DBManager::get();
+        $vl = $db->prepare("SELECT s.Seminar_id as id, s.Name as name FROM `seminare` as s
+                            WHERE s.Seminar_id = ?");
+        $vl->execute(array($this->vlid));
+
+        $vls =  $vl->fetchAll();
+        $name = $vls[0]["name"];
+        return $name;
+    }
+
 
 
 
@@ -106,7 +117,7 @@ class copyWiki extends StudipPlugin implements SystemPlugin
 
 
     protected function getDisplayName() {
-        return "VL Manager";
+        return "Wiki Kopieren ".$this->getVlName();
     }
 
     protected function getTemplate($template_file_name, $layout = "without_infobox") {

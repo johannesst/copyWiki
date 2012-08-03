@@ -27,6 +27,18 @@ function copyWiki(vls, anzahl)
     });
 }
 
+function helpDelete() {
+    $('#copyHelpDelete').dialog({
+        minWidth: 400,
+        modal: true,
+        buttons: {
+            "Ok": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+}
+
 $(document).ready(function(){
     $("#buttonCopyWiki").button();
     $("#buttonCopyWiki").click(
@@ -36,9 +48,10 @@ $(document).ready(function(){
             $("#copystatus").show();
             $(":input:checkbox:checked").each(
                 function() {
-                    vls[anzahl] = $(this).val();
-                    anzahl = anzahl + 1;
-
+                    if($(this).val() != "itsoktodelete") {
+                        vls[anzahl] = $(this).val();
+                        anzahl = anzahl + 1;
+                    }
                 }
             );
 
