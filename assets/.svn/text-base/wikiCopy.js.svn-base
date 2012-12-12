@@ -5,15 +5,21 @@
  * Time: 13:41
  * To change this template use File | Settings | File Templates.
  */
-function copyWiki(vls)
+function copyWiki(vls, anzahl)
 {
+    var steps = 100/anzahl;
+    var nextstep = steps;
     $.each(vls, function(index, value) {
-                $.getJSON('/plugins_packages/neo/copyWiki/ajax.php', {
+        alert(index+ "=>" + value);
+        $.getJSON('/plugins_packages/neo/copyWiki/ajax.php', {
             from: $("#cid").val(),
             to: value
         }, function(data){
             if(data["status"] == "ok") {
-
+                $( "#progressbar" ).progressbar({
+                    value: nextstep
+                });
+                nextstep = nextstep + steps;
             }
         });
 
@@ -44,11 +50,12 @@ $(document).ready(function(){
                 function() {
                     if($(this).val() != "itsoktodelete") {
                         vls[anzahl] = $(this).val();
+                        anzahl = anzahl + 1;
                     }
                 }
             );
 
-            copyWiki(vls);
+            copyWiki(vls, anzahl);
         });
 });
 

@@ -1,7 +1,7 @@
 pluginname=NEO Wiki Copy
 pluginclassname=copyWiki
 origin=neo
-version=0.1
+version=0.5
 description=Gibt die Möglichkeit das Komplette Wiki in eine neue Vorlesung zu kopieren
 studipMinVersion=2.1
 
