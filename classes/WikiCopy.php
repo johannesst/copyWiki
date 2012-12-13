@@ -6,11 +6,12 @@
  */
 
 /**
- * Description of copyWiki
- *
+ * Stellt die Funtkionen bereit die Notwending sind damit das Wiki Kopiert werden kann
+ * Kopiert auch die Dateien zu einem Wiki
+ * 
  * @author johannesstichler
  */
-class copyWiki {
+class Wikicopy {
     //put your code here
 }
 

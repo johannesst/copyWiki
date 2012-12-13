@@ -1,18 +1,18 @@
 <h2>Wiki kopieren</h2>
 <div>Hier haben Sie die M&ouml;glichkeit, den kompletten Inhalt des Wikis der (Quell-)Veranstaltung <strong> <?= $vorlesungsname ?> </strong>  in das Wiki einer anderen (Ziel-)Veranstaltung zu kopieren. Bitte beachten Sie, dass Inhalte eines bereits bestehenden Wikis in der Zielveranstaltung damit gel&ouml;scht bzw. &uuml;berschrieben werden.</div>
-<div>Infos ?ber das Wiki dieser Veranstaltung:
+<div>Infos &uuml;ber das Wiki dieser Veranstaltung:
     <div>Anzahl der Wiki Seiten: <?= $infos["seiten"] ?></div>
     <div>Letzte &Auml;nderung: <?= date("d.m.Y - G:i:s" ,$infos["aenderung"]) ?> </div>
 </div>
-<div>
+<div id="copy_vls">
 <div><p>Liste der Veranstaltungen</p></div>
 <div style="width: 100%; float: left;"><div style="width: 5%; float: left;">Auswahl</div><div style="width: 10%; float: left;">Semester</div><div style="width: 40%; float: left;">Veranstaltungsname</div></div>
 <? foreach($vls as $v) : ?>
-<div style="width: 100%; float: left;"><div style="width: 5%; float: left;"><input type="checkbox" name="vorlesung" value="<?= $v["id"] ?>" ></div><div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div><div style="width: 40%; float: left;"><?= $v["name"] ?></div></div><br>
-<? endforeach ?>
+<div style="width: 100%; float: left;"><div style="width: 5%; float: left;"><input type="checkbox" name="vorlesung" value="<?= $v["id"] ?>" ></div><div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div><div style="width: 40%; float: left;"><?= $v["name"] ?></div></div>
+<? endforeach ?> 
 </div>
-<div><br>Wiki dieser Veranstaltung <strong>  <?= $vorlesungsname ?> </strong> in die oben ausgew&auml;hlten Veranstaltungen kopieren</div>
-<div><input type="checkbox" name="vorlesung" id="itsoktodelete" value="itsoktodelete">Ich bin mir bewusst, dass durch Kopieren des Wiki-Inhalts dieser Veranstaltung eventuell vorhandene Wikis in den von mir oben ausgew&auml;hlten Zielveranstaltungen unwiderruflich gel&ouml;scht bzw.&uuml;berschrieben werden. <a  href='#' onclick="helpDelete();">Bei Fragen klicken Sie hier</a></div>
+<div style="float: left; padding-top: 20px; padding-bottom: 20px; width: 100%;">Wiki dieser Veranstaltung <strong>  <?= $vorlesungsname ?> </strong> in die oben ausgew&auml;hlten Veranstaltungen kopieren</div>
+<div style="float: left; padding-bottom: 10px; width: 100%;"><input type="checkbox" name="vorlesung" id="itsoktodelete" value="itsoktodelete">Ich bin mir bewusst, dass durch Kopieren des Wiki-Inhalts dieser Veranstaltung eventuell vorhandene Wikis in den von mir oben ausgew&auml;hlten Zielveranstaltungen unwiderruflich gel&ouml;scht bzw.&uuml;berschrieben werden. <a  href='#' onclick="helpDelete();">Bei Fragen klicken Sie hier</a></div>
 <div><button id="buttonCopyWiki">Kopieren</button></div>
 
 <div id="copystatus" style="display: none;">

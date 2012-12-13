@@ -17,7 +17,7 @@ if(isset($_REQUEST["to"]) AND isset($_REQUEST["from"])) {
                                 AND status = 'dozent'");
     $fromvl->execute(array($from));
 
-    $fromvl =  $WikiFrom->fetchAll();
+    $fromvl =  $fromvl->fetchAll();
 
     if($fromvl[0]["count(user_id)"] == "1") $fromvl = true;
 
@@ -27,7 +27,7 @@ if(isset($_REQUEST["to"]) AND isset($_REQUEST["from"])) {
                                 AND status = 'dozent'");
     $tovl->execute(array($to));
 
-    $tovl =  $WikiFrom->fetchAll();
+    $tovl =  $tovl->fetchAll();
 
     if($tovl[0]["count(user_id)"] == "1") $tovl = true;
 
@@ -76,7 +76,7 @@ if(isset($_REQUEST["to"]) AND isset($_REQUEST["from"])) {
         foreach($WikiFrom as $f) {
             $WikiFrom = $db->prepare('INSERT INTO studip.wiki_links (
                 range_id, from_keyword, to_keyword)
-                VALUES (?, ?, ?, ?, ?, ?)');
+                VALUES (?, ?, ?)');
             $WikiFrom->execute(array($to,$f["from_keyword"],$f["to_keyword"]));
         }
 

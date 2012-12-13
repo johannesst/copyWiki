@@ -19,9 +19,9 @@ class copyWiki extends StudipPlugin implements SystemPlugin
             $userid = $GLOBALS['user']->id;
             $userrechte =   $perm->studip_perms;
             $this->userright = $userrechte[$this->vlid][$userid];
-            if($this->userright == "dozent") {
+            if($this->userright == "dozent" AND Navigation::hasItem("/course/wiki")) {
                 $navigation = new AutoNavigation("Wiki kopieren", PluginEngine::getURL($this, array(), "show"));
-                Navigation::addItem('/course/copy', clone $navigation);
+                Navigation::addItem('/course/wiki/copy', clone $navigation);
             }
 
         }
