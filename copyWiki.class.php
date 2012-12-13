@@ -1,4 +1,5 @@
 <?php
+require_once 'classes/wikicopy.php';
 /**
  * Created by JetBrains PhpStorm.
  * User: johannesstichler
@@ -29,10 +30,12 @@ class copyWiki extends StudipPlugin implements SystemPlugin
     }
 
     public function show_action() {
+        $neowiki = new neoWiki();
         PageLayout::addStylesheet($this->getPluginURL() .'/assets/wikicopy.css');
         PageLayout::addScript($this->getPluginURL() . '/assets/wikiCopy.js');
         $template = $this->getTemplate("copy.php");
         $this->vlid = $_REQUEST["cid"];
+        $template->set_attribute('folders', $neowiki->getDataFolders($this->vlid));
         $template->set_attribute('infos', $this->getWikiInfos());
         $template->set_attribute('vls', $this->getUserVl());
         $template->set_attribute('cid', $this->vlid);
@@ -65,7 +68,8 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $db = DBManager::get();
         $aenderung = $db->prepare("SELECT s.Seminar_id as id, s.Name as name, s.start_time FROM `seminare` as s
                                     INNER JOIN seminar_user as u ON s.`Seminar_id` = u.Seminar_id
-                                    WHERE u.user_id = ? AND u.status = 'dozent'");
+                                    WHERE u.user_id = ? AND u.status = 'dozent'
+                                    ORDER BY  s.start_time DESC");
         $aenderung->execute(array($GLOBALS['user']->id));
 
         $vls =  $aenderung->fetchAll();
@@ -79,7 +83,8 @@ class copyWiki extends StudipPlugin implements SystemPlugin
                 $sem = $sem[0];
 
                 $v["sem_name"] = $sem["name"];
-               $vlliste[] = $v;
+                $vlliste[] = $v;
+               
            }
        }
 

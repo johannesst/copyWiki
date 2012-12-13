@@ -11,8 +11,26 @@
  * 
  * @author johannesstichler
  */
-class Wikicopy {
-    //put your code here
+class neoWiki {
+    function getDataFolders($cid) {
+        $db = DBManager::get();
+        $sql = "SELECT  f.name as 'Ordner', f.folder_id FROM `dokumente` as d  "
+                   ."INNER JOIN folder as f on f.folder_id = d.`range_id` "
+                   ."WHERE (`seminar_id` LIKE  ?) "
+                   ."ORDER BY f.name";
+        $folder = $db->prepare($sql);
+        $folder->execute(array($cid));
+        $folder =  $folder->fetchAll();
+        $list = array();
+        $flist = array();
+        foreach($folder as $f) {
+            if(array_search($f["folder_id"], $list) === false) {
+                $list[] = $f["folder_id"];
+                $flist[] = array("id" => $f["folder_id"], "name" =>$f["Ordner"]) ;
+            }
+        }
+        return $flist;
+    }
 }
 
 ?>

@@ -1,29 +1,47 @@
-<h2>Wiki kopieren</h2>
-<div>Hier haben Sie die M&ouml;glichkeit, den kompletten Inhalt des Wikis der (Quell-)Veranstaltung <strong> <?= $vorlesungsname ?> </strong>  in das Wiki einer anderen (Ziel-)Veranstaltung zu kopieren. Bitte beachten Sie, dass Inhalte eines bereits bestehenden Wikis in der Zielveranstaltung damit gel&ouml;scht bzw. &uuml;berschrieben werden.</div>
-<div>Infos &uuml;ber das Wiki dieser Veranstaltung:
-    <div>Anzahl der Wiki Seiten: <?= $infos["seiten"] ?></div>
-    <div>Letzte &Auml;nderung: <?= date("d.m.Y - G:i:s" ,$infos["aenderung"]) ?> </div>
+<div id="wiki_copy_assi_static">
+    <input id="cid" style="" value="<?= $cid ?>">
+    <input id="step" style="" value="0">
 </div>
-<div id="copy_vls">
-<div><p>Liste der Veranstaltungen</p></div>
-<div style="width: 100%; float: left;"><div style="width: 5%; float: left;">Auswahl</div><div style="width: 10%; float: left;">Semester</div><div style="width: 40%; float: left;">Veranstaltungsname</div></div>
-<? foreach($vls as $v) : ?>
-<div style="width: 100%; float: left;"><div style="width: 5%; float: left;"><input type="checkbox" name="vorlesung" value="<?= $v["id"] ?>" ></div><div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div><div style="width: 40%; float: left;"><?= $v["name"] ?></div></div>
-<? endforeach ?> 
-</div>
-<div style="float: left; padding-top: 20px; padding-bottom: 20px; width: 100%;">Wiki dieser Veranstaltung <strong>  <?= $vorlesungsname ?> </strong> in die oben ausgew&auml;hlten Veranstaltungen kopieren</div>
-<div style="float: left; padding-bottom: 10px; width: 100%;"><input type="checkbox" name="vorlesung" id="itsoktodelete" value="itsoktodelete">Ich bin mir bewusst, dass durch Kopieren des Wiki-Inhalts dieser Veranstaltung eventuell vorhandene Wikis in den von mir oben ausgew&auml;hlten Zielveranstaltungen unwiderruflich gel&ouml;scht bzw.&uuml;berschrieben werden. <a  href='#' onclick="helpDelete();">Bei Fragen klicken Sie hier</a></div>
-<div><button id="buttonCopyWiki">Kopieren</button></div>
-
-<div id="copystatus" style="display: none;">
-    Das Kopieren war erfolgreich
+<div id="wiki_copy_assi_0" class="wiki_copy_assi">
+    <h1>Willkommen im Assistent zum Kopieren des Wikis</h1>
+    <div class="wiki_copy_assi_text">Hier k&ouml;nnen sie den ganzen Inhalt dieser Veranstaltung ( <strong>  <?= $vorlesungsname ?> </strong> ) in eine andere Veranstaltung kopieren. Dabei haben Sie die Möglichkeit einen Ordner anzugeben in dem alle Bilder und Dateien gespeichert sind. Dieser Ordner wird dann auch Kopiert und die Links in dem neuen Wiki angepasst </div>
 </div>
 
-<input id="cid" style="display: none;" value="<?= $cid ?>">
+<div id="wiki_copy_assi_1" class="wiki_copy_assi">
+    <h1>Bitte wählen Sie die Veranstaltung aus wohin das Wiki kopiert werden soll (Schritt 1) </h1>
+        <div class="wiki_copy_assi_text">
+            <div><p>Liste der Veranstaltungen</p></div>
+            <div style="width: 100%; float: left;"><div style="width: 5%; float: left;">Auswahl</div><div style="width: 10%; float: left;">Semester</div><div style="width: 40%; float: left;">Veranstaltungsname</div></div>
+                <? foreach($vls as $v) : ?>
+                    <div style="width: 100%; float: left;">
+                        <div style="width: 5%; float: left;">
+                            <input type="checkbox" name="vorlesung" value="<?= $v["id"] ?>" >
+                        </div>
+                        <div style="width: 10%; float: left;"><?= $v["sem_name"] ?></div>
+                        <div style="width: 40%; float: left;"><?= $v["name"] ?></div>
+                    </div>
+                <? endforeach ?> 
+        </div>
+</div>
 
+<div id="wiki_copy_assi_2" class="wiki_copy_assi">
+    <h1>Bitte wählen Sie den Ordner aus, welcher die Dateien f&uuml;r  das Wiki enth&auml;t (Schritt 2)</h1>
+    <? foreach($folders as $f) : ?>
+                    <div style="width: 100%; float: left;">
+                        <div style="width: 5%; float: left;">
+                            <input type="checkbox" name="folder" value="<?= $f["id"] ?>" >
+                        </div>
+                        <div style="width: 40%; float: left;"><?= $f["name"] ?></div>
+                    </div>
+                <? endforeach ?> 
+</div>
 
-<div id="copyHelpDelete" style="display: none;">
-    <h3>Hilfe</h3>
-    <p>Mit dem Tool copyWiki haben Sie die M?glichkeit von einer Veranstaltung das Wiki in mehrere Veranstaltungen zu kopieren. Aus technischen Gr?nden wird das Wiki in der Ziel Veranstaltung gel&ouml;scht</p>
+<div id="wiki_copy_assi_3" class="wiki_copy_assi">
+    <h1>Bitte wählen Sie die Veranstaltung aus wohin das Wiki kopiert werden soll (Schritt 3)</h1>
+    <div class="wiki_copy_assi_text">Hier k&ouml;nnen sie den ganzen Inhalt dieser Veranstaltung ( <strong>  <?= $vorlesungsname ?> </strong> ) in eine andere Veranstaltung kopieren. Dabei haben Sie die Möglichkeit einen Ordner anzugeben in dem alle Bilder und Dateien gespeichert sind. Dieser Ordner wird dann auch Kopiert und die Links in dem neuen Wiki angepasst </div>
+</div>
 
+<div id="wiki_copy_assi_control">
+    <div id="wiki_copy_assi_cancel">Abbrechen</div>
+    <div id="wiki_copy_assi_next">Weiter -></div>
 </div>
