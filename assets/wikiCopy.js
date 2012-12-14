@@ -5,66 +5,7 @@
  * Time: 13:41
  * To change this template use File | Settings | File Templates.
  */
-/*
-function copyWiki(vls, anzahl)
-{
-    var steps = 100/anzahl;
-    var nextstep = steps;
-    var zahl = 0 
-    $.each(vls, function(index, value) {
-        //alert(zahl+ "=>" + anzahl);
-        $.getJSON('/plugins_packages/neo/copyWiki/ajax.php', {
-            from: $("#cid").val(),
-            to: value
-        }, function(data){
-            if(data["status"] == "ok") {
-                $( "#progressbar" ).progressbar({
-                    value: nextstep
-                });
-                nextstep = nextstep + steps;
-		zahl = zahl + 1;
-		if(zahl == anzahl) {
-			alert("Das Kopieren war erfolgreich");
-		}
-            }
-        });
 
-
-    });
-}
-
-function helpDelete() {
-    $('#copyHelpDelete').dialog({
-        minWidth: 400,
-        modal: true,
-        buttons: {
-            "Ok": function() {
-                $(this).dialog("close");
-            }
-        }
-    });
-}
-
-$(document).ready(function(){
-    $("#buttonCopyWiki").button();
-    $("#buttonCopyWiki").click(
-        function () {
-            var anzahl = 0;
-            var vls = {};
-            $("#copystatus").show();
-            $(":input:checkbox:checked").each(
-                function() {
-                    if($(this).val() != "itsoktodelete") {
-                        vls[anzahl] = $(this).val();
-                        anzahl = anzahl + 1;
-                    }
-                }
-            );
-
-            copyWiki(vls, anzahl);
-        });
-});
-*/
 function cancel() {
     $("#step").val(0);
     step1();
@@ -114,8 +55,10 @@ function step4() {
 }
 
 function copyWiki() {
-    var anzahl = 0, vls = {};
-    var folderanzahl = 0, folders = {};
+    var anzahl = 0;
+    var vls = {};
+    var folderanzahl = 0;
+    var folders = {};
     //Auslesen der Veranstaltungen
     $("#wiki_copy_assi_1 :input:checkbox:checked").each(
         function() {
@@ -129,13 +72,18 @@ function copyWiki() {
         $("#wiki_copy_assi_2 :input:checkbox:checked").each(
         function() {
             if(true) {
-                console.log($(this).val());
+                //console.log($(this).val());
                 folders[folderanzahl] = $(this).val();
                 folderanzahl++;
             }
         });
-         alert(anzahl);
-        //Fuer jede ausgewaehlte Veranstalltung soll das Wiki kopiert werden
+        startcopy(vls, folders, anzahl,  folderanzahl);
+         
+}
+
+function startcopy(vls, folders, anzahl,  folderanzahl) {
+    var is;
+      //Fuer jede ausgewaehlte Veranstalltung soll das Wiki kopiert werden
          $.each(vls, function(index, value) {
             $.getJSON('plugins.php/copywiki/ajax', {
                from: $("#cid").val(),
@@ -147,8 +95,13 @@ function copyWiki() {
                                alert("Das Kopieren war erfolgreich");
                        }
                }
-           });
-           //Dabei sollen auch gleich alle Dateien bzw. Ordner kopiert werden.
+           });   
+           if(is <=100) return false;
+           else is++;
+    });
+    
+    
+     //Dabei sollen auch gleich alle Dateien bzw. Ordner kopiert werden.
           /*
            $.each(folders, function(index, fol) {
                     $.getJSON('plugins.php/copywiki/ajax', {
@@ -164,9 +117,6 @@ function copyWiki() {
                         }
                     });
            }); */
-    });
-        
-                
 }
 
 
