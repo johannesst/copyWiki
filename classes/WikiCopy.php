@@ -123,7 +123,7 @@ class neoWiki {
             $WikiFrom->execute(array($f["user_id"],$to,$f["keyword"],$f["chdate"]));
         }
 
-        echo json_encode(array("status" => "ok"));
+       // echo json_encode(array("status" => "ok"));
 
 
     } else {
@@ -131,6 +131,67 @@ class neoWiki {
     }
         
     }
+    
+    function copyFolders($vlid, $folders, $to) {
+         $db = DBManager::get();
+        foreach ($folders as $fo) {
+            $sql = " SELECT *  FROM `dokumente` WHERE `seminar_id` LIKE ? AND `range_id` = ?";
+            $files = $db->prepare($sql);
+            $files->execute(array($vlid, $fo));
+            $files =  $files->fetchAll();
+            $newfolderid = $this->makeuid();       
+            foreach($files as $file) {
+                $oldpfad = $file["dokument_id"];
+                $oldpfad = $GLOBALS["UPLOAD_PATH"]."/".$oldpfad[0] .  $oldpfad[1] . "/".  $oldpfad;
+                $newid = $this->makeuid();        
+                $newpfad = $GLOBALS["UPLOAD_PATH"]."/".$newid[0] .  $newid[1] . "/".  $newid;
+                If(!is_dir($GLOBALS["UPLOAD_PATH"]."/".$newid[0] .  $newid[1] ))  mkdir($GLOBALS["UPLOAD_PATH"]."/".$newid[0] .  $newid[1] );
+                    
+                if(copy($oldpfad, $newpfad))
+                { 
+                    
+                    //Datei erstellen
+                    $sql = "INSERT INTO `dokumente` (
+                                    `dokument_id` ,  `range_id` , `user_id` ,  `seminar_id` ,  `name` , `description` ,   `filename` ,  `mkdate` ,    `chdate` ,  `filesize` ,    `autor_host` ,     `downloads` ,  `url` ,     `protected` ,    `priority` ,  `author_name`
+                                    )
+                                    VALUES (
+                                    ?,?,?, ?,?, ?,?,?,?,?,?,?, ?, ?, ?, ?
+                                    )";
+                    $files = $db->prepare($sql);
+                    $files->execute(array($newid, $newfolderid, $file["user_id"],$to,$file["name"] , $file["description"] ,   $file["filename"] ,  $file["mkdate"] ,    $file["chdate"] ,  $file["filesize"] ,    $file["autor_host"] ,  $file["downloads"] ,  $file["url"] ,     $file["protected"] ,    $file["priority"] ,  $file["author_name"]));
+                    //Im neuen Wiki alle Datein verknüpfungen erneuern
+                    $sql = "update wiki set body  = replace(body,
+                        'type=0&file_id=".$file["dokument_id"]."&file_name=".$file["filename"]."',
+                        'type=0&file_id=".$newid."&file_name=".$file["filename"]."') 
+                        WHERE range_id ='".$to."'";
+                      $wikiupdate = $db->prepare($sql);
+                      $wikiupdate->execute(array());
+                } else echo "Fehler beim Kopieren";
+            }
+            $sql = "SELECT *  FROM folder  WHERE range_id = ?";
+            $folderold = $db->prepare($sql);
+            $folderold->execute(array($to));
+            $folderold =  $folderold->fetchAll();
+            $folderold = $folderold[0];
+             $sql = "INSERT INTO `folder` (
+                                    folder_id ,  range_id , user_id ,   name , description ,   permission ,  mkdate ,    chdate ,  priority 
+                                    )
+                                    VALUES (
+                                    ?,?,?, ?,?, ?,?,?,?
+                                    )";
+              $foldernew = $db->prepare($sql);
+              $foldernew->execute(array($newfolderid, $to,$folderold["user_id"],$folderold["name"],$folderold["description"],$folderold["permission"],$folderold["mkdate"],$folderold["chdate"],$folderold["priority"]));
+            echo $newfolderid;
+        }
+        
+     
+    }
+
+    function makeuid()
+    {
+        return md5(uniqid("jdfiuwenxclka")); // So werden in StudIP die UserIDs generiert
+    }
+    
 }
 
 ?>

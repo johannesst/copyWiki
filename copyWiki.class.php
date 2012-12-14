@@ -24,7 +24,7 @@ class copyWiki extends StudipPlugin implements SystemPlugin
                 $navigation = new AutoNavigation("Wiki kopieren", PluginEngine::getURL($this, array(), "show"));
                 Navigation::addItem('/course/wiki/copy', clone $navigation);
             }
-
+             
         }
 
     }
@@ -41,6 +41,8 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $template->set_attribute('cid', $this->vlid);
         $template->set_attribute('vorlesungsname', $this->getVlName());
         echo $template->render();
+        
+         
     }
 
     private function getWikiInfos() {
@@ -97,7 +99,6 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $vl = $db->prepare("SELECT s.Seminar_id as id, s.Name as name FROM `seminare` as s
                             WHERE s.Seminar_id = ?");
         $vl->execute(array($this->vlid));
-
         $vls =  $vl->fetchAll();
         $name = $vls[0]["name"];
         return $name;
@@ -111,25 +112,11 @@ class copyWiki extends StudipPlugin implements SystemPlugin
         $copy = new neoWiki();
         foreach ($vls as $v) {
             $newWikiId = $copy->copyWiki($this->vlid, $v);
-            //$copy->copyFolders($this->vlid, $folders, $newWikiId);
+            $copy->copyFolders($this->vlid, $folders, $v);
         }
     }
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     protected function getDisplayName() {
         return "Wiki Kopieren ".$this->getVlName();
     }
