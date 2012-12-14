@@ -104,9 +104,18 @@ class copyWiki extends StudipPlugin implements SystemPlugin
     }
 
 
+    public function ajax_action() {
+        $this->vlid = $_REQUEST["from"];
+        $vls = $_REQUEST["vls"];
+        $folders = $_REQUEST["folders"];
+        $copy = new neoWiki();
+        foreach ($vls as $v) {
+            $newWikiId = $copy->copyWiki($this->vlid, $v);
+            //$copy->copyFolders($this->vlid, $folders, $newWikiId);
+        }
+    }
 
-
-
+    
 
 
 

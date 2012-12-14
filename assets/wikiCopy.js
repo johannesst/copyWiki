@@ -55,12 +55,23 @@ function step4() {
 }
 
 function copyWiki() {
-    var anzahl = 0;
     var vls = {};
-    var folderanzahl = 0;
     var folders = {};
     //Auslesen der Veranstaltungen
-    $("#wiki_copy_assi_1 :input:checkbox:checked").each(
+    vls = getAllVLs();
+    folders = getAllFolders();
+    startcopy(vls, folders);
+         
+}
+
+function startcopy(vls, folders) {
+    $.post("ajax", { 'vls': vls, 'folders': folders, 'from': $('#cid').val() });
+}
+
+function getAllVLs() {
+    var anzahl = 0;
+    var vls = {};
+     $("#wiki_copy_assi_1 :input:checkbox:checked").each(
         function() {
             if(true) {
                 console.log($(this).val());
@@ -68,57 +79,22 @@ function copyWiki() {
                 anzahl++;
             }
         });
-        //Auslesen der zu kopierenden Ordner
-        $("#wiki_copy_assi_2 :input:checkbox:checked").each(
+        return vls;
+}
+
+function getAllFolders() {
+    var anzahl = 0;
+    var folders = {};
+     $("#wiki_copy_assi_2 :input:checkbox:checked").each(
         function() {
             if(true) {
-                //console.log($(this).val());
-                folders[folderanzahl] = $(this).val();
-                folderanzahl++;
+                console.log($(this).val());
+                folders[anzahl] = $(this).val();
+                anzahl++;
             }
         });
-        startcopy(vls, folders, anzahl,  folderanzahl);
-         
+        return folders;
 }
-
-function startcopy(vls, folders, anzahl,  folderanzahl) {
-    var is;
-      //Fuer jede ausgewaehlte Veranstalltung soll das Wiki kopiert werden
-         $.each(vls, function(index, value) {
-            $.getJSON('plugins.php/copywiki/ajax', {
-               from: $("#cid").val(),
-               to: value,
-               todo: copyWiki
-           }, function(data){
-               if(data["status"] == "ok") {
-                           if(index == anzahl) {
-                               alert("Das Kopieren war erfolgreich");
-                       }
-               }
-           });   
-           if(is <=100) return false;
-           else is++;
-    });
-    
-    
-     //Dabei sollen auch gleich alle Dateien bzw. Ordner kopiert werden.
-          /*
-           $.each(folders, function(index, fol) {
-                    $.getJSON('plugins.php/copywiki/ajax', {
-                        from: $("#cid").val(),
-                        to: value,
-                        todo: copydata,
-                        what: fol
-                    }, function(data){
-                        if(data["status"] == "ok") {
-                                    if(index == anzahl) {
-                                        alert("Das Kopieren war erfolgreich");
-                                }
-                        }
-                    });
-           }); */
-}
-
 
 function hideall() {
       $("#wiki_copy_assi_0").hide();
