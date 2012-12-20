@@ -114,7 +114,7 @@ class copyWiki extends StudipPlugin implements SystemPlugin
                     $folders = $_REQUEST["folders"];
                     $copy = new neoWiki();
                     foreach ($vls as $v) {
-                        $newWikiId = $copy->copyWiki($this->vlid, $v);
+                        //$newWikiId = $copy->copyWiki($this->vlid, $v);
                         $copy->copyFolders($this->vlid, $folders, $v);
                     }
                 break;

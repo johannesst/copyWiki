@@ -173,6 +173,8 @@ class neoWiki {
             $folderold->execute(array($to));
             $folderold =  $folderold->fetchAll();
             $folderold = $folderold[0];
+            If(empty($folderold["user_id"])) return false;
+            
              $sql = "INSERT INTO `folder` (
                                     folder_id ,  range_id , user_id ,   name , description ,   permission ,  mkdate ,    chdate ,  priority 
                                     )
@@ -180,11 +182,10 @@ class neoWiki {
                                     ?,?,?, ?,?, ?,?,?,?
                                     )";
               $foldernew = $db->prepare($sql);
-              $foldernew->execute(array($newfolderid, $to,$folderold["user_id"],$folderold["name"],$folderold["description"],$folderold["permission"],$folderold["mkdate"],$folderold["chdate"],$folderold["priority"]));
+             
+           $foldernew->execute(array($newfolderid, $to,$folderold["user_id"],$folderold["name"],$folderold["description"],$folderold["permission"],$folderold["mkdate"],$folderold["chdate"],$folderold["priority"]));
             echo $newfolderid;
         }
-        
-     
     }
 
     function makeuid()
