@@ -78,7 +78,21 @@ function getNameVls() {
 }
 
 function startcopy(vls, folders) {
-    $.post("ajax", {'todo': 'copy', 'vls': vls, 'folders': folders, 'from': $('#cid').val() });
+    hideall();
+    $('#wiki_copy_assi_wait').toggle();
+    $("#wiki_copy_assi_next").toggle();
+    $("#wiki_copy_assi_next").toggle();
+    $.post("ajax", {'todo': 'copy', 'vls': vls, 'folders': folders, 'from': $('#cid').val() },
+        function (data) {
+            if(data.length == 0) {
+                  $('#wiki_copy_assi_wait').toggle();
+                  $('#wiki_copy_assi_fertig').toggle();
+            } else {
+                $('#wiki_copy_assi_wait').toggle();
+                $('#wiki_copy_assi_error').toggle();
+                $('#wiki_copy_assi_error_msg').append(data);
+            }
+        });
 }
 
 function getAllVLs() {

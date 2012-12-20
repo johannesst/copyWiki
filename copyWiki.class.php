@@ -109,18 +109,21 @@ class copyWiki extends StudipPlugin implements SystemPlugin
     public function ajax_action() {
         switch ($_REQUEST["todo"]) {
                 case 'copy':
-                    $this->vlid = $_REQUEST["from"];
-                    $vls = $_REQUEST["vls"];
-                    $folders = $_REQUEST["folders"];
-                    $copy = new neoWiki();
-                    foreach ($vls as $v) {
-                        $newWikiId = $copy->copyWiki($this->vlid, $v);
-                        $copy->copyFolders($this->vlid, $folders, $v);
+                    try {
+                        $this->vlid = $_REQUEST["from"];
+                        $vls = $_REQUEST["vls"];
+                        $folders = $_REQUEST["folders"];
+                        $copy = new neoWiki();
+                        foreach ($vls as $v) {
+                            $newWikiId = $copy->copyWiki($this->vlid, $v);
+                            $copy->copyFolders($this->vlid, $folders, $v);
+                        }
+                    } catch (Exception $ex) {
+                        echo $ex;
                     }
                 break;
                 case 'getname' :
                     echo  $this->getVlName($_REQUEST["vlid"]);
-                    //json_encode(array("name" => $this->getVlName($_REQUEST["vlid"]))); 
                     break;
                 
             default:

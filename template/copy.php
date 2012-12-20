@@ -41,9 +41,29 @@
     <div class="wiki_copy_assi_text">
         Mit dem Klick auf Wiki-Kopieren wird das Wiki in die Angegebene Veranstaltungen kopiert. Der Inhalt wird von <strong>  <?= $vorlesungsname ?> </strong> in folgende Veranstaltungen kopiert <br /> <div id="wiki_copy_vllist"> </div>
 </div>
-
 </div>
 
+<div id="wiki_copy_assi_wait" class="wiki_copy_assi" style="display: none;">
+    <h1>der Kopiervorgang wird durchgeführt</h1>
+    <div class="wiki_copy_assi_text">
+        Das Kopieren wird durchgeführt. Dieser sollte nach wenigen Sekunden beendet sein.
+</div>
+</div>
+
+<div id="wiki_copy_assi_fertig" class="wiki_copy_assi" style="display: none;">
+    <h1>Kopiervorgang erflogreich</h1>
+    <div class="wiki_copy_assi_text">
+        Das Kopieren des Wikis war erfolgreich.
+</div>
+</div>
+
+<div id="wiki_copy_assi_error" class="wiki_copy_assi" style="display: none;">
+    <h1>Kopiervorgang nicht erflogreich</h1>
+    <div class="wiki_copy_assi_text">
+        Das Kopieren des Wikis war leider nicht erfolgreich. Die Fehlermeldung ist:
+        <div id="wiki_copy_assi_error_msg"></div>
+</div>
+</div>
 
 <div id="wiki_copy_assi_control">
     <div id="wiki_copy_assi_cancel">Abbrechen</div>

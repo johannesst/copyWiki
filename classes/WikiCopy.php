@@ -185,7 +185,7 @@ class neoWiki {
               $foldernew = $db->prepare($sql);
              
            $foldernew->execute(array($newfolderid, $to,$folderold["user_id"],$folderold["name"],$folderold["description"],$folderold["permission"],$folderold["mkdate"],$folderold["chdate"],$folderold["priority"]));
-            echo $newfolderid;
+            //echo $newfolderid;
         }
     }
 
