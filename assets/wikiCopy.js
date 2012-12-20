@@ -49,6 +49,7 @@ function step3() {
 
 function step4() {
     hideall();
+    getNameVls();
     $("#wiki_copy_assi_3").show();
     $("#step").val(4);
     $("#wiki_copy_assi_next").html('<span class="ui-button-text">Wiki kopieren</span>');
@@ -64,8 +65,20 @@ function copyWiki() {
          
 }
 
+function getNameVls() {
+      $("#wiki_copy_assi_1 :input:checkbox:checked").each(
+        function() {
+            if(true) {
+                $.post("ajax", {'todo': 'getname', 'vlid': $(this).val() }, function (data) {
+                    $('#wiki_copy_vllist').append("<p>"+data + "</p>");
+                     console.log(data);
+                });
+            }
+        });
+}
+
 function startcopy(vls, folders) {
-    $.post("ajax", { 'vls': vls, 'folders': folders, 'from': $('#cid').val() });
+    $.post("ajax", {'todo': 'copy', 'vls': vls, 'folders': folders, 'from': $('#cid').val() });
 }
 
 function getAllVLs() {

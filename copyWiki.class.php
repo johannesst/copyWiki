@@ -94,11 +94,12 @@ class copyWiki extends StudipPlugin implements SystemPlugin
 
     }
 
-    private function getVlName() {
+    private function getVlName($vlid = false) {
+        if(!$vlid) $this->vlid;
         $db = DBManager::get();
         $vl = $db->prepare("SELECT s.Seminar_id as id, s.Name as name FROM `seminare` as s
                             WHERE s.Seminar_id = ?");
-        $vl->execute(array($this->vlid));
+        $vl->execute(array($vlid));
         $vls =  $vl->fetchAll();
         $name = $vls[0]["name"];
         return $name;
@@ -106,14 +107,26 @@ class copyWiki extends StudipPlugin implements SystemPlugin
 
 
     public function ajax_action() {
-        $this->vlid = $_REQUEST["from"];
-        $vls = $_REQUEST["vls"];
-        $folders = $_REQUEST["folders"];
-        $copy = new neoWiki();
-        foreach ($vls as $v) {
-            $newWikiId = $copy->copyWiki($this->vlid, $v);
-            $copy->copyFolders($this->vlid, $folders, $v);
+        switch ($_REQUEST["todo"]) {
+                case 'copy':
+                    $this->vlid = $_REQUEST["from"];
+                    $vls = $_REQUEST["vls"];
+                    $folders = $_REQUEST["folders"];
+                    $copy = new neoWiki();
+                    foreach ($vls as $v) {
+                        $newWikiId = $copy->copyWiki($this->vlid, $v);
+                        $copy->copyFolders($this->vlid, $folders, $v);
+                    }
+                break;
+                case 'getname' :
+                    echo  $this->getVlName($_REQUEST["vlid"]);
+                    //json_encode(array("name" => $this->getVlName($_REQUEST["vlid"]))); 
+                    break;
+                
+            default:
+                break;
         }
+        
     }
 
     

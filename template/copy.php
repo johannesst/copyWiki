@@ -37,8 +37,9 @@
 </div>
 
 <div id="wiki_copy_assi_3" class="wiki_copy_assi">
-    <h1>Bitte wählen Sie die Veranstaltung aus wohin das Wiki kopiert werden soll (Schritt 3)</h1>
-    <div class="wiki_copy_assi_text">Hier k&ouml;nnen sie den ganzen Inhalt dieser Veranstaltung ( <strong>  <?= $vorlesungsname ?> </strong> ) in eine andere Veranstaltung kopieren. Dabei haben Sie die Möglichkeit einen Ordner anzugeben in dem alle Bilder und Dateien gespeichert sind. Dieser Ordner wird dann auch Kopiert und die Links in dem neuen Wiki angepasst </div>
+    <h1>Zusammenfassung (Schritt 3)</h1>
+    <div class="wiki_copy_assi_text">
+        Mit dem Klick auf Wiki-Kopieren wird das Wiki in die Angegebene Veranstaltungen kopiert. Der Inhalt wird von <strong>  <?= $vorlesungsname ?> </strong> in folgende Veranstaltungen kopiert <br /> <div id="wiki_copy_vllist"> </div>
 </div>
 
 <div id="wiki_copy_assi_control">
