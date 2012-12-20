@@ -94,8 +94,8 @@ class copyWiki extends StudipPlugin implements SystemPlugin
 
     }
 
-    private function getVlName($vlid = false) {
-        if(!$vlid) $this->vlid;
+    private function getVlName($vlid = "") {
+        if(empty($vlid)) $vlid = $this->vlid;
         $db = DBManager::get();
         $vl = $db->prepare("SELECT s.Seminar_id as id, s.Name as name FROM `seminare` as s
                             WHERE s.Seminar_id = ?");

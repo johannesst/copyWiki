@@ -80,8 +80,8 @@ function getNameVls() {
 function startcopy(vls, folders) {
     hideall();
     $('#wiki_copy_assi_wait').toggle();
-    $("#wiki_copy_assi_next").toggle();
-    $("#wiki_copy_assi_next").toggle();
+    $("#wiki_copy_assi_next").button({ disabled: true });
+    $("#wiki_copy_assi_cancel").button({ disabled: true });
     $.post("ajax", {'todo': 'copy', 'vls': vls, 'folders': folders, 'from': $('#cid').val() },
         function (data) {
             if(data.length == 0) {

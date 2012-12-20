@@ -134,6 +134,7 @@ class neoWiki {
     
     function copyFolders($vlid, $folders, $to) {
          $db = DBManager::get();
+         if(empty($folders)) return false;
         foreach ($folders as $fo) {
             $sql = " SELECT *  FROM `dokumente` WHERE `seminar_id` LIKE ? AND `range_id` = ?";
             $files = $db->prepare($sql);
