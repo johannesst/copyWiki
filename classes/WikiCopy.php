@@ -165,16 +165,17 @@ class neoWiki {
                         'type=0&file_id=".$file["dokument_id"]."&file_name=".$file["filename"]."',
                         'type=0&file_id=".$newid."&file_name=".$file["filename"]."') 
                         WHERE range_id ='".$to."'";
-                    
+                    echo $sql; 
                       $wikiupdate = $db->prepare($sql);
                       $wikiupdate->execute(array());
                 } else echo "Fehler beim Kopieren";
             }
-            $sql = "SELECT *  FROM folder  WHERE range_id = ?";
+            $sql = "SELECT *  FROM folder  WHERE folder_id = ?";
             $folderold = $db->prepare($sql);
-            $folderold->execute(array($to));
+            $folderold->execute(array($fo));
             $folderold =  $folderold->fetchAll();
             $folderold = $folderold[0];
+            print_r($folderold);
             If(empty($folderold["user_id"])) return false;
             
              $sql = "INSERT INTO `folder` (
