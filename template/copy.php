@@ -42,6 +42,9 @@
         Mit dem Klick auf Wiki-Kopieren wird das Wiki in die Angegebene Veranstaltungen kopiert. Der Inhalt wird von <strong>  <?= $vorlesungsname ?> </strong> in folgende Veranstaltungen kopiert <br /> <div id="wiki_copy_vllist"> </div>
 </div>
 
+</div>
+
+
 <div id="wiki_copy_assi_control">
     <div id="wiki_copy_assi_cancel">Abbrechen</div>
     <div id="wiki_copy_assi_next">Weiter -></div>

@@ -117,9 +117,9 @@ class neoWiki {
         $WikiFrom =  $WikiFrom->fetchAll();
 
         foreach($WikiFrom as $f) {
-            $WikiFrom = $db->prepare('INSERT INTO wiki_links (
+            $WikiFrom = $db->prepare('INSERT INTO wiki_locks (
                 user_id, range_id, keyword, chdate)
-                VALUES (?, ?, ?, ?, ?, ?)');
+                VALUES (?, ?, ?, ?)');
             $WikiFrom->execute(array($f["user_id"],$to,$f["keyword"],$f["chdate"]));
         }
 
@@ -164,6 +164,7 @@ class neoWiki {
                         'type=0&file_id=".$file["dokument_id"]."&file_name=".$file["filename"]."',
                         'type=0&file_id=".$newid."&file_name=".$file["filename"]."') 
                         WHERE range_id ='".$to."'";
+                    
                       $wikiupdate = $db->prepare($sql);
                       $wikiupdate->execute(array());
                 } else echo "Fehler beim Kopieren";
